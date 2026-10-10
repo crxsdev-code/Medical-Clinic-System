@@ -1,148 +1,116 @@
-# NRM Mendoza Medical Clinic, Pharmacy and Laboratory — Website (Version 1)
+NRM Mendoza Medical Clinic, Pharmacy and Laboratory — Website (Version 1)
 
-Premium public-facing website for **NRM Mendoza Medical Clinic, Pharmacy and Laboratory**,
-Unit 7 and 8, Town Center, Poblacion, Kapatagan, 9214 Lanao del Norte, Philippines.
+Premium public-facing website for NRM Mendoza Medical Clinic, Pharmacy and Laboratory, located at Unit 7 and 8, Town Center, Poblacion, Kapatagan, 9214 Lanao del Norte, Philippines.
 
-Built with **React + Vite + TypeScript + Tailwind CSS v4** and React Router.
+Built with React + Vite + TypeScript + Tailwind CSS v4 and React Router.
 
----
-
-## Quick start
-
-```bash
+Quick Start
 npm install
-npm run dev        # start the dev server (http://localhost:5173)
-npm run build      # type-check + production build to /dist
-npm run preview    # serve the production build locally
-npm run check      # renders every route (fast smoke test, no browser needed)
-```
+npm run dev
+npm run build
+npm run preview
+npm run check
 
----
+npm run dev — Start the development server at http://localhost:5173.
+npm run build — Run the TypeScript checks and production build.
+npm run preview — Preview the production build locally.
+npm run check — Run the project's route smoke tests.
+Routes
+Route	Page
+/	Home — hero, trust strip, about, services, doctors, facilities, hours, location, and FAQs
+/about	About the clinic
+/services	Medical, pharmacy, and laboratory services
+/doctors	Doctors and accessible profile modal
+/facilities	Facilities gallery and lightbox
+/faq	Frequently asked questions
+/contact	Contact details, form, and map
+Where to Put Assets
+Clinic Logo
 
-## Routes
+Replace the placeholder with the official logo:
 
-| Route         | Page                                          |
-| ------------- | --------------------------------------------- |
-| `/`           | Home — hero, trust strip, about, services, why NRM Mendoza, doctors, facilities, hours, location, FAQs |
-| `/about`      | About the clinic                              |
-| `/services`   | Medical, pharmacy and laboratory services     |
-| `/doctors`    | Doctors + accessible profile modal            |
-| `/facilities` | Facilities gallery + lightbox                 |
-| `/faq`        | Accordion FAQ                                 |
-| `/contact`    | Contact details, form and map                 |
-
----
-
-## Where to put assets
-
-### Logo (required)
-
-Replace the placeholder with the official artwork:
-
-```
 src/assets/images/nrm-mendoza-logo.png
-```
 
-Overwrite that file with the real logo — no code changes are needed. The component that
-renders it is `src/components/Logo.tsx`. Do not recolour or distort the logo.
+The logo is rendered by src/components/Logo.tsx. Replace the image file with the official artwork without recoloring or distorting it.
 
-> Until the real logo is supplied, a generated placeholder mark in the brand palette
-> (magenta / cyan / green) is used.
+Until the official logo is provided, a generated placeholder mark using the brand colors is displayed.
 
-### Photography
+Photography
+Asset	Location
+Doctor portraits	src/assets/images/doctors/<doctor-id>.jpg
+Facility photos	src/assets/images/facilities/<entry-id>.jpg
+Hero photo	src/assets/images/clinic-slide-1.jpg
+About photo	src/assets/images/clinic-slide-4.jpg
 
-| What             | Where to put it                                                                 |
-| ---------------- | ------------------------------------------------------------------------------- |
-| Doctor portraits | `src/assets/images/doctors/<doctor-id>.jpg` — e.g. `dr-nilda-s-mendoza.jpg`      |
-| Facility photos  | `src/assets/images/facilities/<entry-id>.jpg` — e.g. `consultation-room.jpg`     |
-| Hero photo       | `src/assets/images/clinic-slide-1.jpg` (imported by `src/components/Hero.tsx`)   |
-| About photo      | `src/assets/images/clinic-slide-4.jpg` (imported by `src/pages/Home.tsx`)        |
+Doctor and facility photos are loaded automatically by filename through import.meta.glob in the relevant data files. If an image is missing, a placeholder is displayed.
 
-Photos are resolved automatically by filename (`import.meta.glob` in
-`src/data/doctors.ts` and `src/data/facilities.ts`) — drop the file in, rebuild, and the
-placeholder is replaced. No code changes required. Until a matching file exists, a
-designed placeholder is shown; no unrelated stock imagery is used anywhere on the site.
+Editing Clinic Information
 
----
+Editable content is maintained in src/data/.
 
-## Editing clinic information (single source of truth)
+File	Contents
+src/data/clinic.ts	Clinic name, address, phone numbers, Facebook, Google Maps, and opening hours
+src/data/doctors.ts	Doctor names, specialties, descriptions, and photos
+src/data/services.ts	Service categories and descriptions
+src/data/faqs.ts	Frequently asked questions and answers
+src/data/facilities.ts	Facility gallery entries and photos
+src/data/navigation.ts	Header and footer navigation
+Sunday Opening Hours
 
-All editable content lives in `src/data/`:
+Sunday hours are intentionally marked as To be confirmed because the available sources disagree between 9:00 AM–12:00 PM and 8:00 AM–12:00 PM.
 
-| File                     | Contains                                                        |
-| ------------------------ | --------------------------------------------------------------- |
-| `src/data/clinic.ts`     | Name, address, phone numbers, Facebook, Google Maps, **opening hours** |
-| `src/data/doctors.ts`    | Doctor names, specialties, descriptions, photos (auto-loaded from `assets/images/doctors/`) |
-| `src/data/services.ts`   | Service categories and descriptions                             |
-| `src/data/faqs.ts`       | FAQ questions and answers                                       |
-| `src/data/facilities.ts` | Facility gallery entries (photos auto-loaded from `assets/images/facilities/`) |
-| `src/data/navigation.ts` | Header / footer navigation                                      |
+Update the Sunday entry in src/data/clinic.ts once the clinic confirms the correct schedule.
 
-### ⚠️ Sunday hours
+Design System
 
-Sunday is intentionally set to **“To be confirmed”** because two sources disagree
-(9:00 AM – 12:00 PM vs 8:00 AM – 12:00 PM). Update the Sunday entry in
-`src/data/clinic.ts` once the clinic confirms — the navbar, footer, home page, doctors
-page, contact page and FAQs all read from that one file.
+The design tokens are defined in src/index.css using Tailwind CSS v4's @theme.
 
----
+Token	Value	Purpose
+navy	#123B4A	Primary color
+deep	#0B2733	Headers, footer, and hero
+brand	#168CC5	Medical blue
+aqua	#20B8D8	Cyan accents
+magenta	#D81B80	Accent color
+leaf	#63A94D	Accent color
+mist	#F7FAFB	Page background
+ink	#172A32	Primary text
+muted	#66767D	Secondary text
+line	#E4ECEF	Borders
 
-## Design system
+The visual balance uses neutral colors and navy as the foundation, blue and cyan as secondary colors, and magenta and green sparingly. The primary font is Inter.
 
-Defined once in `src/index.css` (Tailwind v4 `@theme`):
+Content and Placeholders
 
-| Token        | Value     | Use                                       |
-| ------------ | --------- | ----------------------------------------- |
-| `navy`       | `#123B4A` | Primary                                   |
-| `deep`       | `#0B2733` | Headers, footer, hero                     |
-| `brand`      | `#168CC5` | Medical blue (links, icons, eyebrows)     |
-| `aqua`       | `#20B8D8` | Cyan accents on dark backgrounds          |
-| `magenta`    | `#D81B80` | Accent — used sparingly                   |
-| `leaf`       | `#63A94D` | Accent — used sparingly                   |
-| `mist`       | `#F7FAFB` | Page background                           |
-| `ink`        | `#172A32` | Primary text                              |
-| `muted`      | `#66767D` | Secondary text                            |
-| `line`       | `#E4ECEF` | Borders                                   |
+Information that has not been verified is represented by clearly labeled placeholders rather than invented content.
 
-Balance: ~75% neutral/white/navy, ~20% blue/cyan, ~5% magenta/green.
-Font: **Inter** (single family, loaded with `display=swap`).
+Examples include:
 
----
+Clinic history in src/pages/About.tsx
+Doctor professional details in src/data/doctors.ts
+Doctor and facility photography
+Sunday opening hours in src/data/clinic.ts
 
-## Content rules (why some things look “empty”)
+The contact form is frontend-only in Version 1. It validates input and displays loading, success, and error states, but does not send emails.
 
-Nothing about the clinic has been invented. Where information was not supplied, a
-clearly-labelled, easily replaceable placeholder is used instead of filler content:
+Version 2 — Appointment Booking
 
-- Clinic history block (`src/pages/About.tsx`)
-- Doctor professional details (`src/data/doctors.ts`)
-- Facility and doctor photography
-- Sunday opening hours (`src/data/clinic.ts`)
+Appointment booking is planned but has not yet been implemented.
 
-The contact form is **frontend-only** in Version 1: it validates, shows loading, success
-and error states, and logs the payload locally — it does not pretend to send email.
+Booking calls to action currently direct users to /contact.
+Additional routes can be added in src/App.tsx.
+The submitInquiry() function in src/lib/contact.ts is the intended integration point for a backend, email service, or CRM.
+Version 1 does not intentionally collect sensitive medical information.
+Quality Checklist
 
----
+The project is intended to support the following quality checks:
 
-## Version 2 — appointment booking (prepared, not built)
+npm run build — TypeScript and Vite production build.
+npm run check — Route rendering smoke tests.
+Semantic HTML and accessible form fields.
+Keyboard support for modals, lightboxes, and menus.
+Visible focus indicators and skip-to-content navigation.
+Reduced-motion preferences.
+Responsive layouts at common mobile, tablet, and desktop widths.
+Route-specific titles and meta descriptions, Open Graph tags, and MedicalClinic JSON-LD.
 
-- Booking CTAs already route to `/contact` (no fake booking is simulated).
-- Add routes under `src/App.tsx` (e.g. `/appointments`) without touching the layout.
-- Replace the body of `submitInquiry()` in `src/lib/contact.ts` with a real API call —
-  that file is the single integration point for a backend, email service or CRM.
-- No sensitive medical data is collected anywhere in Version 1.
-
----
-
-## Quality checklist
-
-- `npm run build` → TypeScript (strict) + Vite production build pass
-- `npm run check` → every route renders without errors
-- Semantic HTML, one `<h1>` per page, labelled form fields, `aria-*` on accordion, modal
-  and menu, visible focus rings, skip-to-content link
-- Keyboard support: Escape closes modal/lightbox/menu, focus trap + focus restore,
-  arrow keys browse the lightbox
-- `prefers-reduced-motion` respected globally
-- Responsive at 375 / 768 / 1024 / 1440 / 1920 px; no horizontal scrolling
-- Unique title + meta description per route, Open Graph tags, `MedicalClinic` JSON-LD
-- No API keys, no analytics, no patient data collection
+Run the relevant checks locally to verify the current implementation before release.
