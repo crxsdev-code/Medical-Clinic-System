@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { ArrowRight, Facebook, Menu, X } from "lucide-react";
+import { Facebook, Menu, X } from "lucide-react";
 
 import Logo from "./Logo";
 import TopBar from "./TopBar";
-import { ButtonLink } from "./Button";
 import PhoneButton from "./PhoneButton";
 import { mainNav } from "@/data/navigation";
 import { clinic } from "@/data/clinic";
@@ -19,28 +18,10 @@ import { clinic } from "@/data/clinic";
  */
 export default function Navbar() {
   const { pathname } = useLocation();
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleRef = useRef<HTMLButtonElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
-
-  const isHome = pathname === "/";
-  const transparent = isHome && !scrolled && !menuOpen;
-
-  /* Track scroll position ------------------------------------------------ */
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  /* Re-evaluate the transparent state immediately after a route change
-     (avoids a one-frame flash when arriving back at the top of Home). */
-  useEffect(() => {
-    setScrolled(window.scrollY > 40);
-  }, [pathname]);
 
   /* Close the menu whenever the route changes ---------------------------- */
   useEffect(() => {
@@ -86,43 +67,35 @@ export default function Navbar() {
       "relative px-3 py-2 text-[0.95rem] font-medium tracking-tight transition-colors duration-300",
       isActive
         ? "text-brand"
-        : transparent
-          ? "text-white/85 hover:text-white"
-          : "text-navy/70 hover:text-navy",
+        : "text-navy/70 hover:text-navy",
     ].join(" ");
 
   const panelLinkClasses = (isActive: boolean) =>
     [
-      "flex items-center justify-between border-b border-line py-4 text-lg font-semibold tracking-tight transition-colors",
+      "flex items-center justify-between border-b border-line py-4 text-base font-semibold tracking-tight transition-colors",
       isActive ? "text-brand" : "text-navy hover:text-brand",
     ].join(" ");
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       {/* Top information bar */}
-      <TopBar collapsed={scrolled} />
+      <TopBar />
 
-      <div
-        className={[
-          "transition-all duration-300 ease-soft",
-          transparent
-            ? "bg-transparent"
-            : "border-b border-line bg-white/95 shadow-soft backdrop-blur-md",
-        ].join(" ")}
-      >
-        <div
-          className={[
-            "shell flex items-center justify-between gap-6 transition-all duration-300 ease-soft",
-            scrolled ? "h-16" : "h-20",
-          ].join(" ")}
-        >
+      <div className="border-b border-line bg-white/95 shadow-soft backdrop-blur-md transition-all duration-300 ease-soft">
+        <div className="shell flex h-16 items-center justify-between gap-6 transition-all duration-300 ease-soft lg:h-16">
           {/* Brand */}
           <Link
             to="/"
             className="flex shrink-0 items-center gap-3 rounded-lg outline-offset-4"
             aria-label={`${clinic.name} — home`}
           >
-            <Logo className={scrolled ? "h-10 w-auto" : "h-11 w-auto sm:h-12"} />
+            <Logo className="h-10 w-auto sm:h-11" />
+            <div className="hidden md:block">
+              <p className="text-xs font-bold uppercase leading-tight tracking-[0.14em] text-navy">
+                NRM Mendoza
+              </p>
+              <p className="text-[0.65rem] text-muted">Medical Clinic</p>
+            </div>
           </Link>
 
           {/* Desktop navigation */}
@@ -152,16 +125,13 @@ export default function Navbar() {
 
           {/* Actions */}
           <div className="flex items-center gap-3">
-            <ButtonLink
+            <Link
               to="/contact"
-              variant={transparent ? "on-dark" : "primary"}
-              size="sm"
-              className="hidden sm:inline-flex"
+              className="hidden lg:inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand/90"
             >
               Contact Us
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </ButtonLink>
-
+              <span aria-hidden="true">→</span>
+            </Link>
             <button
               ref={toggleRef}
               type="button"
@@ -169,12 +139,7 @@ export default function Navbar() {
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
               aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-              className={[
-                "flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-300 lg:hidden",
-                transparent
-                  ? "border-white/30 text-white hover:bg-white/10"
-                  : "border-line text-navy hover:bg-mist",
-              ].join(" ")}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-navy transition-all duration-300 lg:hidden hover:bg-mist"
             >
               {menuOpen ? (
                 <X className="h-5 w-5" aria-hidden="true" />
@@ -215,10 +180,22 @@ export default function Navbar() {
             menuOpen ? "visible translate-x-0" : "invisible translate-x-full",
           ].join(" ")}
         >
+          {/* Header with logo and clinic name */}
           <div className="flex items-center justify-between border-b border-line px-6 py-5">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-              Menu
-            </span>
+            <Link
+              to="/"
+              className="flex items-center gap-3"
+              onClick={closeMenu}
+              aria-label={`${clinic.name} — home`}
+            >
+              <Logo className="h-10 w-auto" />
+              <div>
+                <p className="text-xs font-bold uppercase leading-tight tracking-[0.14em] text-navy">
+                  NRM Mendoza
+                </p>
+                <p className="text-[0.65rem] text-muted">Medical Clinic</p>
+              </div>
+            </Link>
             <button
               type="button"
               onClick={() => {
@@ -245,13 +222,15 @@ export default function Navbar() {
                     {({ isActive }) => (
                       <>
                         {item.label}
-                        <ArrowRight
+                        <span
                           className={[
                             "h-4 w-4 transition-transform duration-300",
                             isActive ? "text-brand" : "text-line",
                           ].join(" ")}
                           aria-hidden="true"
-                        />
+                        >
+                          →
+                        </span>
                       </>
                     )}
                   </NavLink>
@@ -261,27 +240,30 @@ export default function Navbar() {
           </nav>
 
           <div className="space-y-3 border-t border-line px-6 py-6">
+            <Link
+              to="/contact"
+              onClick={closeMenu}
+              className="flex items-center justify-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand/90"
+            >
+              Contact Us
+              <span aria-hidden="true">→</span>
+            </Link>
             <PhoneButton
-              variant="solid"
+              variant="outline"
               size="md"
               showLabel
               className="w-full"
               ariaLabel={`Call the clinic at ${clinic.phones[0].display}`}
             />
-            <div className="flex gap-3">
-              <ButtonLink to="/contact" variant="secondary" size="md" className="flex-1">
-                Contact Us
-              </ButtonLink>
-              <a
-                href={clinic.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit our Facebook page (opens in a new tab)"
-                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-line text-navy transition hover:border-brand hover:text-brand"
-              >
-                <Facebook className="h-5 w-5" aria-hidden="true" />
-              </a>
-            </div>
+            <a
+              href={clinic.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit our Facebook page (opens in a new tab)"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-line text-navy transition hover:border-brand hover:text-brand"
+            >
+              <Facebook className="h-5 w-5" aria-hidden="true" />
+            </a>
           </div>
         </div>
       </div>

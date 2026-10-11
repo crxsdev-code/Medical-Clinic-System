@@ -17,5 +17,4 @@ export const mainNav: NavItem[] = [
   { label: "Doctors", path: "/doctors" },
   { label: "Facilities", path: "/facilities" },
   { label: "FAQ", path: "/faq" },
-  { label: "Contact", path: "/contact" },
 ];

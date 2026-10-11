@@ -68,7 +68,7 @@ export default function Services() {
                 id={service.slug}
                 className="grid scroll-mt-32 items-center gap-8 lg:grid-cols-2 lg:gap-14"
               >
-                <Reveal className={reversed ? "lg:order-2" : ""}>
+                <div className={reversed ? "lg:order-2" : ""}>
                   <span
                     className={`flex h-12 w-12 items-center justify-center rounded-lg ${ACCENTS[service.accent]}`}
                   >
@@ -110,9 +110,9 @@ export default function Services() {
                       Call
                     </ButtonAnchor>
                   </div>
-                </Reveal>
+                </div>
 
-                <Reveal delay={120} className={reversed ? "lg:order-1" : ""}>
+                <div className={reversed ? "lg:order-1" : ""}>
                   <div className="overflow-hidden rounded-xl border border-line shadow-soft">
                     <div className="aspect-[4/3] w-full">
                       <PlaceholderImage
@@ -123,7 +123,7 @@ export default function Services() {
                       />
                     </div>
                   </div>
-                </Reveal>
+                </div>
               </article>
             );
           })}

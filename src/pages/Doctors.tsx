@@ -7,7 +7,6 @@ import DoctorCard from "@/components/DoctorCard";
 import DoctorModal from "@/components/DoctorModal";
 import ClinicHours from "@/components/ClinicHours";
 import CTABand from "@/components/CTABand";
-import Reveal from "@/components/Reveal";
 import { ButtonAnchor, ButtonLink } from "@/components/Button";
 import { doctors, type Doctor } from "@/data/doctors";
 import { clinic } from "@/data/clinic";
@@ -48,37 +47,33 @@ export default function Doctors() {
 
       {/* Doctor cards -------------------------------------------------------- */}
       <section aria-labelledby="doctors-list" className="shell py-16 sm:py-20">
-        <Reveal>
-          <SectionHeading
-            id="doctors-list"
-            eyebrow="Physicians"
-            title="The people behind the care"
-            description="Select “View Profile” to learn more about each physician."
-          />
-        </Reveal>
+        <SectionHeading
+          id="doctors-list"
+          eyebrow="Physicians"
+          title="The people behind the care"
+          description='Select "View Profile" to learn more about each physician.'
+        />
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:max-w-4xl">
-          {doctors.map((doctor, index) => (
-            <DoctorCard key={doctor.id} doctor={doctor} delay={index * 100} onOpen={setProfile} />
+          {doctors.map((doctor) => (
+            <DoctorCard key={doctor.id} doctor={doctor} onOpen={setProfile} />
           ))}
         </div>
 
-        <Reveal delay={200}>
-          <p className="mt-8 flex max-w-2xl items-start gap-3 rounded-lg border border-dashed border-line bg-white/70 p-5 text-xs leading-relaxed text-muted">
-            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-leaf" aria-hidden="true" />
-            <span>
-              <strong className="text-navy">Editorial placeholder:</strong> full professional
-              profiles — schedule, credentials and areas of focus — will be published on this page
-              once confirmed by the clinic. Only verified information is shown.
-            </span>
-          </p>
-        </Reveal>
+        <p className="mt-8 flex max-w-2xl items-start gap-3 rounded-lg border border-dashed border-line bg-white/70 p-5 text-xs leading-relaxed text-muted">
+          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-leaf" aria-hidden="true" />
+          <span>
+            <strong className="text-navy">Editorial placeholder:</strong> full professional
+            profiles — schedule, credentials and areas of focus — will be published on this page
+            once confirmed by the clinic. Only verified information is shown.
+          </span>
+        </p>
       </section>
 
       {/* Hours --------------------------------------------------------------- */}
       <section aria-labelledby="doctors-hours" className="border-y border-line bg-white">
         <div className="shell grid gap-8 py-16 sm:py-20 lg:grid-cols-2 lg:items-start">
-          <Reveal>
+          <div>
             <SectionHeading
               id="doctors-hours"
               eyebrow="Availability"
@@ -95,11 +90,9 @@ export default function Doctors() {
               </a>{" "}
               before visiting.
             </p>
-          </Reveal>
+          </div>
 
-          <Reveal delay={100}>
-            <ClinicHours />
-          </Reveal>
+          <ClinicHours />
         </div>
       </section>
 

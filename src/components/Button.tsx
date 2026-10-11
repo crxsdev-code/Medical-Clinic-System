@@ -1,7 +1,7 @@
 import type { MouseEventHandler, ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "accent" | "on-dark";
+export type ButtonVariant = "primary" | "secondary" | "ghost" | "accent" | "on-dark" | "white";
 export type ButtonSize = "sm" | "md" | "lg";
 
 const BASE =
@@ -21,6 +21,8 @@ const VARIANTS: Record<ButtonVariant, string> = {
     "bg-navy text-white shadow-soft hover:bg-deep hover:-translate-y-0.5",
   "on-dark":
     "bg-white/10 text-white border border-white/25 hover:bg-white hover:text-deep hover:-translate-y-0.5",
+  white:
+    "bg-white text-brand hover:bg-white/90",
 };
 
 const SIZES: Record<ButtonSize, string> = {

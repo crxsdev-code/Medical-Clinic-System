@@ -1,29 +1,16 @@
 import { Phone } from "lucide-react";
 import { clinic, weeklyHoursLabel } from "@/data/clinic";
 
-interface TopBarProps {
-  /** Collapsed state while the visitor scrolls down. */
-  collapsed: boolean;
-}
-
 /**
  * Slim information strip above the main navigation.
  *
- * Deliberately minimal: trust line · hours · phone number.
- * Collapses smoothly once the page is scrolled.
+ * Displays: trust line · hours · phone number.
  */
-export default function TopBar({ collapsed }: TopBarProps) {
+export default function TopBar() {
   const primary = clinic.phones[0];
 
   return (
-    <div
-      className={[
-        "overflow-hidden bg-deep text-white transition-all duration-500 ease-soft",
-        collapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100",
-      ].join(" ")}
-      aria-hidden={collapsed ? "true" : undefined}
-      inert={collapsed}
-    >
+    <div className="bg-deep text-white">
       <div className="shell flex h-9 items-center justify-between gap-4 text-[13px]">
         {/* Left — trust line */}
         <p className="flex min-w-0 items-center gap-2 truncate">

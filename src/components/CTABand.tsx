@@ -16,19 +16,9 @@ export default function CTABand({
 }) {
   return (
     <section className="shell pb-20 pt-16 sm:pb-24 sm:pt-20" aria-labelledby="cta-band-title">
-      <div className="relative overflow-hidden rounded-xl gradient-animate px-6 py-12 shadow-lift sm:px-10 sm:py-14 lg:px-16 lg:py-16">
+      <div className="relative overflow-hidden rounded-xl bg-deep px-6 py-12 shadow-lift sm:px-10 sm:py-14 lg:px-16 lg:py-16">
         {/* Restrained texture — no colour blobs, no gradients */}
         <div className="pointer-events-none absolute inset-0 dot-grid opacity-50" aria-hidden="true" />
-        <div
-          className="pointer-events-none absolute -right-24 -top-32 h-72 w-72 rounded-full"
-          style={{ background: "rgba(22, 140, 197, 0.18)", filter: "blur(70px)" }}
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute -left-24 -bottom-32 h-72 w-72 rounded-full"
-          style={{ background: "rgba(32, 184, 216, 0.15)", filter: "blur(70px)" }}
-          aria-hidden="true"
-        />
 
         <div className="relative z-10 flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
