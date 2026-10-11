@@ -81,8 +81,8 @@ export default function Navbar() {
       {/* Top information bar */}
       <TopBar />
 
-      <div className="border-b border-line bg-white/95 shadow-soft backdrop-blur-md transition-all duration-300 ease-soft">
-        <div className="shell flex h-16 items-center justify-between gap-6 transition-all duration-300 ease-soft lg:h-16">
+      <div className="border-b border-line bg-white/60 shadow-soft backdrop-blur-lg transition-all duration-300 ease-soft">
+        <div className="shell flex h-14 items-center justify-between gap-6 transition-all duration-300 ease-soft lg:h-14">
           {/* Brand */}
           <Link
             to="/"
@@ -90,7 +90,7 @@ export default function Navbar() {
             aria-label={`${clinic.name} — home`}
           >
             <Logo className="h-10 w-auto sm:h-11" />
-            <div className="hidden md:block">
+            <div className="md:block">
               <p className="text-xs font-bold uppercase leading-tight tracking-[0.14em] text-navy">
                 NRM Mendoza
               </p>
@@ -127,7 +127,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               to="/contact"
-              className="hidden lg:inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand/90"
+              className="hidden lg:inline-flex items-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand/90"
             >
               Contact Us
               <span aria-hidden="true">→</span>

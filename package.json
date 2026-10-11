@@ -9,7 +9,7 @@
     "build": "tsc -b && vite build",
     "check": "node scripts/check-render.mjs",
     "preview": "vite preview",
-    "typecheck": "tsc -b --noEmit false --pretty"
+    "typecheck": "tsc -b --pretty"
   },
   "dependencies": {
     "lucide-react": "^0.548.0",

@@ -67,7 +67,7 @@ export default function Home() {
       <Hero />
 
       {/* Core services ------------------------------------------------------ */}
-      <section aria-labelledby="services-title" className="shell py-16 sm:py-20">
+      <section aria-labelledby="services-title" className="shell py-16 sm:py-20 bg-gradient-to-b from-white to-mist">
         <SectionHeading
           id="services-title"
           eyebrow="OUR SERVICES"
@@ -78,8 +78,8 @@ export default function Home() {
 
         <div className="mt-12 flex flex-col items-center gap-6 sm:flex-row sm:justify-center sm:divide-x sm:divide-line">
           {services.map((service) => (
-            <div key={service.id} className="flex flex-col items-center text-center sm:px-8">
-              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand/10 text-brand">
+            <div key={service.id} className="flex flex-col items-center text-center sm:px-8 hover-lift">
+              <span className="icon-circle flex h-14 w-14 items-center justify-center rounded-full bg-brand/10 text-brand">
                 {service.icon === 'stethoscope' && <Stethoscope className="h-6 w-6" aria-hidden="true" />}
                 {service.icon === 'pill' && <Pill className="h-6 w-6" aria-hidden="true" />}
                 {service.icon === 'flask' && <FlaskConical className="h-6 w-6" aria-hidden="true" />}
@@ -93,38 +93,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why choose us ------------------------------------------------------ */}
-      <section aria-labelledby="why-title" className="border-y border-line bg-white">
-        <div className="shell py-20 sm:py-24">
+      {/* Visit — map sits high on the homepage so location is easy to find */}
+      <section aria-labelledby="visit-title" className="border-b border-line bg-white">
+        <div className="shell py-16 sm:py-20">
           <SectionHeading
-            id="why-title"
-            eyebrow="Why NRM Mendoza"
-            title="Care Built Around Patients"
-            description="Three services, one location, and a team that treats every patient with dignity."
+            id="visit-title"
+            eyebrow="Plan your visit"
+            title="Clinic Hours & Location"
+            description="We are open six days a week at Town Center, Poblacion, Kapatagan."
           />
 
-          <div className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-            {PILLARS.map(({ icon: Icon, title, description }, index) => (
-              <article key={title} className="group">
-                <div className="flex items-start justify-between">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-mist text-brand transition-colors duration-300 group-hover:bg-brand group-hover:text-white">
-                    <Icon className="h-5.5 w-5.5" aria-hidden="true" />
-                  </span>
-                  <span className="text-xs font-semibold tabular-nums text-navy/25">
-                    0{index + 1}
-                  </span>
-                </div>
-
-                <h3 className="mt-5 text-lg font-bold tracking-tight text-navy">{title}</h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-muted">{description}</p>
-              </article>
-            ))}
+          <div className="mt-10 grid items-stretch gap-6 lg:grid-cols-2">
+            <ClinicHours className="h-full" />
+            <MapSection variant="compact" className="h-full" />
           </div>
         </div>
       </section>
 
       {/* About preview ------------------------------------------------------ */}
-      <section aria-labelledby="about-preview-title" className="shell py-20 sm:py-24">
+      <section aria-labelledby="about-preview-title" className="shell py-20 sm:py-24 bg-gradient-to-b from-mist to-white">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
             <SectionHeading
@@ -189,25 +176,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Visit — map sits high on the homepage so location is easy to find */}
-      <section aria-labelledby="visit-title" className="border-b border-line bg-white">
-        <div className="shell py-16 sm:py-20">
+      {/* Why choose us ------------------------------------------------------ */}
+      <section aria-labelledby="why-title" className="border-y border-line bg-gradient-to-b from-white to-mist">
+        <div className="shell py-20 sm:py-24">
           <SectionHeading
-            id="visit-title"
-            eyebrow="Plan your visit"
-            title="Clinic Hours & Location"
-            description="We are open six days a week at Town Center, Poblacion, Kapatagan."
+            id="why-title"
+            eyebrow="Why NRM Mendoza"
+            title="Care Built Around Patients"
+            description="Three services, one location, and a team that treats every patient with dignity."
           />
 
-          <div className="mt-10 grid items-stretch gap-6 lg:grid-cols-2">
-            <ClinicHours className="h-full" />
-            <MapSection variant="compact" className="h-full" />
+          <div className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {PILLARS.map(({ icon: Icon, title, description }, index) => (
+              <article key={title} className="group hover-lift">
+                <div className="flex items-start justify-between">
+                  <span className="icon-circle flex h-12 w-12 items-center justify-center rounded-2xl bg-mist text-brand transition-colors duration-300 group-hover:bg-brand group-hover:text-white">
+                    <Icon className="h-5.5 w-5.5" aria-hidden="true" />
+                  </span>
+                  <span className="text-xs font-semibold tabular-nums text-navy/25">
+                    0{index + 1}
+                  </span>
+                </div>
+
+                <h3 className="mt-5 text-lg font-bold tracking-tight text-navy">{title}</h3>
+                <p className="mt-2.5 text-sm leading-relaxed text-muted">{description}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Doctors preview ---------------------------------------------------- */}
-      <section aria-labelledby="doctors-preview-title" className="border-y border-line bg-white">
+      <section aria-labelledby="doctors-preview-title" className="border-y border-line bg-gradient-to-b from-mist to-white">
         <div className="shell py-20 sm:py-24">
           <SectionHeading
             id="doctors-preview-title"
@@ -220,7 +220,9 @@ export default function Home() {
 
           <div className="mx-auto mt-12 grid max-w-3xl gap-6 sm:grid-cols-2">
             {doctors.map((doctor) => (
-              <DoctorCard key={doctor.id} doctor={doctor} onOpen={setProfile} />
+              <div key={doctor.id} className="hover-lift">
+                <DoctorCard doctor={doctor} onOpen={setProfile} />
+              </div>
             ))}
           </div>
         </div>
