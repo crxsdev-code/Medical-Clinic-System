@@ -11,14 +11,8 @@ export default function TopBar() {
 
   return (
     <div className="bg-deep text-white">
-      <div className="shell flex h-9 items-center justify-between gap-4 text-[13px]">
-        {/* Left — trust line */}
-        <p className="flex min-w-0 items-center gap-2 truncate">
-          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-leaf" aria-hidden="true" />
-          <span className="font-medium text-white/85">{clinic.tagline}</span>
-        </p>
-
-        {/* Right — hours + phone */}
+      <div className="shell flex h-7 items-center justify-end gap-4 text-[12px]">
+        {/* Hours + phone */}
         <div className="flex shrink-0 items-center gap-5">
           <span className="hidden text-white/55 md:inline">{weeklyHoursLabel}</span>
 

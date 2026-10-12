@@ -3,7 +3,6 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { Facebook, Menu, X } from "lucide-react";
 
 import Logo from "./Logo";
-import TopBar from "./TopBar";
 import PhoneButton from "./PhoneButton";
 import { mainNav } from "@/data/navigation";
 import { clinic } from "@/data/clinic";
@@ -19,9 +18,19 @@ import { clinic } from "@/data/clinic";
 export default function Navbar() {
   const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const toggleRef = useRef<HTMLButtonElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
+
+  /* Scroll detection for navbar background -------------------------------- */
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   /* Close the menu whenever the route changes ---------------------------- */
   useEffect(() => {
@@ -62,12 +71,18 @@ export default function Navbar() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const linkClasses = (isActive: boolean) =>
     [
       "relative px-3 py-2 text-[0.95rem] font-medium tracking-tight transition-colors duration-300",
       isActive
-        ? "text-brand"
-        : "text-navy/70 hover:text-navy",
+        ? "text-aqua"
+        : scrolled
+          ? "text-navy hover:text-brand"
+          : "text-white/90 hover:text-white",
     ].join(" ");
 
   const panelLinkClasses = (isActive: boolean) =>
@@ -78,23 +93,21 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      {/* Top information bar */}
-      <TopBar />
-
-      <div className="border-b border-line bg-white/60 shadow-soft backdrop-blur-lg transition-all duration-300 ease-soft">
+      <div className={`transition-all duration-300 ease-soft ${scrolled ? "bg-white shadow-soft" : "bg-transparent"}`}>
         <div className="shell flex h-14 items-center justify-between gap-6 transition-all duration-300 ease-soft lg:h-14">
           {/* Brand */}
           <Link
             to="/"
+            onClick={scrollToTop}
             className="flex shrink-0 items-center gap-3 rounded-lg outline-offset-4"
             aria-label={`${clinic.name} — home`}
           >
-            <Logo className="h-10 w-auto sm:h-11" />
+            <Logo className="h-12 w-auto sm:h-14" />
             <div className="md:block">
-              <p className="text-xs font-bold uppercase leading-tight tracking-[0.14em] text-navy">
+              <p className={`text-sm font-bold uppercase leading-tight tracking-[0.14em] ${scrolled ? "text-navy" : "text-white"}`}>
                 NRM Mendoza
               </p>
-              <p className="text-[0.65rem] text-muted">Medical Clinic</p>
+              <p className={`text-xs ${scrolled ? "text-muted" : "text-white/80"}`}>Medical Clinic</p>
             </div>
           </Link>
 
@@ -106,6 +119,7 @@ export default function Navbar() {
                 to={item.path}
                 end={item.path === "/"}
                 className={({ isActive }) => linkClasses(isActive)}
+                onClick={scrollToTop}
               >
                 {({ isActive }) => (
                   <>
@@ -113,7 +127,7 @@ export default function Navbar() {
                     <span
                       aria-hidden="true"
                       className={[
-                        "absolute -bottom-0.5 left-3 right-3 h-0.5 origin-left rounded-full bg-brand transition-transform duration-300 ease-soft",
+                        "absolute -bottom-0.5 left-3 right-3 h-0.5 origin-left rounded-full bg-aqua transition-transform duration-300 ease-soft",
                         isActive ? "scale-x-100" : "scale-x-0",
                       ].join(" ")}
                     />
@@ -127,6 +141,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               to="/contact"
+              onClick={scrollToTop}
               className="hidden lg:inline-flex items-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand/90"
             >
               Contact Us
@@ -139,7 +154,7 @@ export default function Navbar() {
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
               aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-navy transition-all duration-300 lg:hidden hover:bg-mist"
+              className={`flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-300 lg:hidden ${scrolled ? "border-line text-navy hover:bg-navy/5" : "border-white/30 text-white hover:bg-white/20"}`}
             >
               {menuOpen ? (
                 <X className="h-5 w-5" aria-hidden="true" />
@@ -185,15 +200,18 @@ export default function Navbar() {
             <Link
               to="/"
               className="flex items-center gap-3"
-              onClick={closeMenu}
+              onClick={() => {
+                closeMenu();
+                scrollToTop();
+              }}
               aria-label={`${clinic.name} — home`}
             >
-              <Logo className="h-10 w-auto" />
+              <Logo className="h-12 w-auto" />
               <div>
-                <p className="text-xs font-bold uppercase leading-tight tracking-[0.14em] text-navy">
+                <p className="text-sm font-bold uppercase leading-tight tracking-[0.14em] text-navy">
                   NRM Mendoza
                 </p>
-                <p className="text-[0.65rem] text-muted">Medical Clinic</p>
+                <p className="text-xs text-muted">Medical Clinic</p>
               </div>
             </Link>
             <button
@@ -203,7 +221,7 @@ export default function Navbar() {
                 toggleRef.current?.focus();
               }}
               aria-label="Close navigation menu"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-line text-navy transition hover:bg-mist"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-line text-navy transition hover:bg-navy/5"
             >
               <X className="h-5 w-5" aria-hidden="true" />
             </button>
@@ -217,7 +235,10 @@ export default function Navbar() {
                     to={item.path}
                     end={item.path === "/"}
                     className={({ isActive }) => panelLinkClasses(isActive)}
-                    onClick={closeMenu}
+                    onClick={() => {
+                      closeMenu();
+                      scrollToTop();
+                    }}
                   >
                     {({ isActive }) => (
                       <>
@@ -242,7 +263,10 @@ export default function Navbar() {
           <div className="space-y-3 border-t border-line px-6 py-6">
             <Link
               to="/contact"
-              onClick={closeMenu}
+              onClick={() => {
+                closeMenu();
+                scrollToTop();
+              }}
               className="flex items-center justify-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand/90"
             >
               Contact Us

@@ -56,77 +56,84 @@ export default function Services() {
       </PageHeader>
 
       {/* Service detail blocks ---------------------------------------------- */}
-      <section aria-label="Service details" className="shell py-16 sm:py-20">
-        <div className="space-y-16 sm:space-y-20">
-          {services.map((service, index) => {
-            const Icon = ICONS[service.icon];
-            const reversed = index % 2 === 1;
+      <section aria-label="Service details" className="bg-gradient-to-b from-mist to-white">
+        <div className="shell py-20 sm:py-24 lg:py-28">
+          <div className="space-y-20 sm:space-y-24 lg:space-y-28">
+            {services.map((service, index) => {
+              const Icon = ICONS[service.icon];
+              const reversed = index % 2 === 1;
 
-            return (
-              <article
-                key={service.id}
-                id={service.slug}
-                className="grid scroll-mt-32 items-center gap-8 lg:grid-cols-2 lg:gap-14"
-              >
-                <div className={reversed ? "lg:order-2" : ""}>
-                  <span
-                    className={`flex h-12 w-12 items-center justify-center rounded-lg ${ACCENTS[service.accent]}`}
-                  >
-                    <Icon className="h-6 w-6" aria-hidden="true" />
-                  </span>
+              return (
+                <article
+                  key={service.id}
+                  id={service.slug}
+                  className="group grid scroll-mt-32 items-center gap-10 lg:grid-cols-2 lg:gap-16"
+                >
+                  <div className={reversed ? "lg:order-2" : ""}>
+                    <div className="flex items-center gap-4">
+                      <span
+                        className={`flex h-14 w-14 items-center justify-center rounded-xl ${ACCENTS[service.accent]} transition-transform duration-300 group-hover:scale-110`}
+                      >
+                        <Icon className="h-7 w-7" aria-hidden="true" />
+                      </span>
+                      <div className="h-px flex-1 bg-gradient-to-r from-line to-transparent" />
+                    </div>
 
-                  <p className="mt-6 flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-brand">
-                    <span className="h-px w-6 bg-brand/50" aria-hidden="true" />
-                    {`0${index + 1}`} — {service.title}
-                  </p>
-
-                  <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight text-navy sm:text-3xl">
-                    {service.title}
-                  </h2>
-
-                  <p className="mt-5 text-base leading-relaxed text-muted">{service.description}</p>
-
-                  <div className="mt-6 flex items-start gap-3 rounded-lg border border-line bg-white p-5 shadow-soft">
-                    <Info className="mt-0.5 h-4.5 w-4.5 shrink-0 text-brand" aria-hidden="true" />
-                    <p className="text-sm leading-relaxed text-muted">
-                      This page describes services at category level. For specific examinations,
-                      availability or requirements, please contact the clinic directly — our team
-                      will be glad to assist.
+                    <p className="mt-6 flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-brand">
+                      <span className="h-px w-8 bg-brand/50" aria-hidden="true" />
+                      {`0${index + 1}`} — {service.title}
                     </p>
-                  </div>
 
-                  <div className="mt-7 flex flex-wrap gap-3">
-                    <ButtonLink to="/contact" variant="primary" size="md">
-                      Contact the Clinic
-                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </ButtonLink>
-                    <ButtonAnchor
-                      href={`tel:${clinic.phones[0].tel}`}
-                      variant="ghost"
-                      size="md"
-                      aria-label={`Call the clinic at ${clinic.phones[0].display}`}
-                    >
-                      <Phone className="h-4 w-4" aria-hidden="true" />
-                      Call
-                    </ButtonAnchor>
-                  </div>
-                </div>
+                    <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-navy sm:text-4xl lg:text-5xl">
+                      {service.title}
+                    </h2>
 
-                <div className={reversed ? "lg:order-1" : ""}>
-                  <div className="overflow-hidden rounded-xl border border-line shadow-soft">
-                    <div className="aspect-[4/3] w-full">
-                      <PlaceholderImage
-                        label={`${service.title} area`}
-                        hint="Add an approved photograph"
-                        tone="dark"
-                        icon={<Icon className="h-6 w-6" aria-hidden="true" />}
-                      />
+                    <p className="mt-6 text-lg leading-relaxed text-muted">{service.description}</p>
+
+                    <div className="mt-8 flex items-start gap-4 rounded-xl border border-line bg-white p-6 shadow-soft transition-shadow duration-300 group-hover:shadow-lift">
+                      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${ACCENTS[service.accent]}`}>
+                        <Info className="h-5 w-5" aria-hidden="true" />
+                      </div>
+                      <p className="text-sm leading-relaxed text-muted">
+                        This page describes services at category level. For specific examinations,
+                        availability or requirements, please contact the clinic directly — our team
+                        will be glad to assist.
+                      </p>
+                    </div>
+
+                    <div className="mt-8 flex flex-wrap gap-4">
+                      <ButtonLink to="/contact" variant="primary" size="md">
+                        Contact the Clinic
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </ButtonLink>
+                      <ButtonAnchor
+                        href={`tel:${clinic.phones[0].tel}`}
+                        variant="ghost"
+                        size="md"
+                        aria-label={`Call the clinic at ${clinic.phones[0].display}`}
+                      >
+                        <Phone className="h-4 w-4" aria-hidden="true" />
+                        Call
+                      </ButtonAnchor>
                     </div>
                   </div>
-                </div>
-              </article>
-            );
-          })}
+
+                  <div className={reversed ? "lg:order-1" : ""}>
+                    <div className="overflow-hidden rounded-2xl border border-line shadow-soft transition-all duration-300 group-hover:shadow-lift group-hover:-translate-y-1">
+                      <div className="aspect-[4/3] w-full bg-gradient-to-br from-line/30 to-line/10">
+                        <PlaceholderImage
+                          label={`${service.title} area`}
+                          hint="Add an approved photograph"
+                          tone="dark"
+                          icon={<Icon className="h-8 w-8" aria-hidden="true" />}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 

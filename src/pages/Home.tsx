@@ -67,7 +67,7 @@ export default function Home() {
       <Hero />
 
       {/* Core services ------------------------------------------------------ */}
-      <section aria-labelledby="services-title" className="shell py-16 sm:py-20 bg-gradient-to-b from-white to-mist">
+      <section aria-labelledby="services-title" className="shell py-20 sm:py-24 bg-gradient-to-b from-white to-mist">
         <SectionHeading
           id="services-title"
           eyebrow="OUR SERVICES"
@@ -95,7 +95,7 @@ export default function Home() {
 
       {/* Visit — map sits high on the homepage so location is easy to find */}
       <section aria-labelledby="visit-title" className="border-b border-line bg-white">
-        <div className="shell py-16 sm:py-20">
+        <div className="shell py-20 sm:py-24">
           <SectionHeading
             id="visit-title"
             eyebrow="Plan your visit"
@@ -111,7 +111,7 @@ export default function Home() {
       </section>
 
       {/* About preview ------------------------------------------------------ */}
-      <section aria-labelledby="about-preview-title" className="shell py-20 sm:py-24 bg-gradient-to-b from-mist to-white">
+      <section aria-labelledby="about-preview-title" className="shell py-24 sm:py-28 bg-gradient-to-b from-mist to-white">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
             <SectionHeading
@@ -178,7 +178,7 @@ export default function Home() {
 
       {/* Why choose us ------------------------------------------------------ */}
       <section aria-labelledby="why-title" className="border-y border-line bg-gradient-to-b from-white to-mist">
-        <div className="shell py-20 sm:py-24">
+        <div className="shell py-24 sm:py-28">
           <SectionHeading
             id="why-title"
             eyebrow="Why NRM Mendoza"
@@ -208,7 +208,7 @@ export default function Home() {
 
       {/* Doctors preview ---------------------------------------------------- */}
       <section aria-labelledby="doctors-preview-title" className="border-y border-line bg-gradient-to-b from-mist to-white">
-        <div className="shell py-20 sm:py-24">
+        <div className="shell py-24 sm:py-28">
           <SectionHeading
             id="doctors-preview-title"
             eyebrow="Our team"

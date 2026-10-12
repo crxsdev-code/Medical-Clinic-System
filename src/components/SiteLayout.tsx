@@ -22,7 +22,7 @@ export default function SiteLayout() {
 
       <Navbar />
 
-      <div className="flex-1 pt-navbar">
+      <div className="flex-1">
         <main id="main-content">
           <Outlet />
         </main>

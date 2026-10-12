@@ -1,77 +1,107 @@
 import { ArrowRight, Clock } from "lucide-react";
+import { useState, useEffect } from "react";
 
 import { ButtonLink } from "./Button";
 import { weeklyHoursLabel } from "@/data/clinic";
 
-import heroImage from "@/assets/images/clinic-slides-1.jpg";
+import heroImage1 from "@/assets/images/clinic-slide-1.jpg";
+import heroImage2 from "@/assets/images/clinic-slide-2.jpg";
+import heroImage3 from "@/assets/images/clinic-slide-3.jpg";
+import heroImage4 from "@/assets/images/clinic-slide-4.jpg";
+
+const heroImages = [heroImage1, heroImage2, heroImage3, heroImage4];
 
 /**
- * Premium hero section - clean single-image composition.
+ * Premium hero section - clean single-image composition with auto-sliding carousel.
  * Left-aligned text content with clear hierarchy: location, headline, tagline, description, CTA, hours.
  */
 export default function Hero() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+    }, 4000); // 4 seconds per slide
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section
-      className="relative isolate flex min-h-[45vh] sm:min-h-[55vh] lg:min-h-screen items-center overflow-hidden !bg-transparent -mt-[6.5rem]"
+      className="relative isolate flex min-h-screen items-center overflow-hidden !bg-transparent"
       aria-labelledby="hero-title"
     >
-      {/* ── Background image ─────────────────────────────────────────────── */}
+      {/* ── Background image carousel ─────────────────────────────────────── */}
       <div className="absolute inset-0">
-        <img
-          src={heroImage}
-          alt="NRM Mendoza Medical Clinic in Kapatagan, Lanao del Norte"
-          className="h-full w-full object-cover object-[25%_30%] sm:object-[30%_30%] md:object-[35%_30%] lg:object-[40%_30%] xl:object-[45%_30%] 2xl:object-[50%_30%] !shadow-none !filter-none"
-          loading="eager"
-          draggable={false}
-        />
-        {/* Slanted gradient overlay - darker on left, lighter on right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-deep/70 via-deep/30 to-transparent" />
+        {heroImages.map((image, index) => (
+          <img
+            key={index}
+            src={image}
+            alt={`NRM Mendoza Medical Clinic - Slide ${index + 1}`}
+            className={`absolute inset-0 h-full w-full object-cover object-center sm:object-[30%_30%] md:object-[35%_30%] lg:object-[40%_30%] xl:object-[45%_30%] 2xl:object-[50%_30%] !shadow-none !filter-none transition-opacity duration-1000 ease-in-out ${
+              index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
+            loading={index === 0 ? 'eager' : 'lazy'}
+            draggable={false}
+          />
+        ))}
+        {/* Premium gradient overlay - professional text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-deep/95 via-deep/70 via-deep/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-deep/60 to-transparent" />
       </div>
 
       {/* ── Main content ─────────────────────────────────────────────────── */}
-      <div className="shell relative z-10 w-full pb-12 pt-[6.5rem] sm:pb-16 sm:pt-[7.5rem] lg:pb-24 lg:pt-[8.5rem] xl:pt-[9.5rem] 2xl:pt-[10rem]">
-        {/* Location label
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/90 mb-6">
-          KAPATAGAN, LANAO DEL NORTE
-        </p> */}
+      <div className="shell relative z-10 w-full pb-16 pt-[7rem] sm:pb-20 sm:pt-[8rem] lg:pb-28 lg:pt-[9rem] xl:pt-[10rem] 2xl:pt-[11rem]">
+        <div className="max-w-3xl lg:max-w-4xl">
+          {/* Location label */}
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/90 mb-8 animate-fade-in">
+            KAPATAGAN, LANAO DEL NORTE
+          </p>
 
-        {/* Main headline */}
-        <h1
-          id="hero-title"
-          className="text-[2rem] font-bold leading-[1.1] text-white mb-4 sm:text-[2.5rem] md:text-[3rem] lg:text-[3.75rem] xl:text-[4.5rem] 2xl:text-[5rem]"
-          style={{ letterSpacing: "-0.025em", maxWidth: "900px" }}
-        >
-          NRM <span className="parisienne font-bold text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] lg:text-[4.25rem] xl:text-[5rem] 2xl:text-[5.5rem]">Mendoza</span>
-          <br />
-          <span className="text-[1.5rem] sm:text-[1.75rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] 2xl:text-[3.5rem]">Medical Clinic</span>
-        </h1>
-
-        {/* Green supporting line */}
-        <p className="text-base font-semibold text-aqua mb-6 sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
-          Compassionate care. Better health.
-        </p>
-
-        {/* Supporting description */}
-        <p className="text-sm leading-relaxed text-white/80 mb-8 max-w-md sm:text-base md:text-lg lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">
-          Medical clinic, pharmacy, and laboratory in Kapatagan, Lanao del Norte.
-        </p>
-
-        {/* CTA */}
-        <div className="mb-6">
-          <ButtonLink
-            to="/services"
-            variant="white"
-            size="lg"
+          {/* Main headline */}
+          <h1
+            id="hero-title"
+            className="text-[2.25rem] font-bold leading-[1.1] text-white mb-6 sm:text-[2.75rem] md:text-[3.25rem] lg:text-[4rem] xl:text-[4.75rem] 2xl:text-[5.25rem]"
+            style={{ letterSpacing: "-0.02em" }}
           >
-            View Services
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </ButtonLink>
-        </div>
+            NRM <span className="parisienne font-bold text-[2.75rem] sm:text-[3.25rem] md:text-[3.75rem] lg:text-[4.5rem] xl:text-[5.25rem] 2xl:text-[5.75rem]">Mendoza</span>
+            <br />
+            <span className="text-[1.75rem] sm:text-[2rem] md:text-[2.25rem] lg:text-[2.75rem] xl:text-[3.25rem] 2xl:text-[3.75rem]">Medical Clinic</span>
+          </h1>
 
-        {/* Hours information */}
-        <div className="flex items-center gap-2 text-xs text-white/70 sm:text-sm md:text-base">
-          <Clock className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
-          <span>{weeklyHoursLabel}</span>
+          {/* Decorative line */}
+          <div className="h-px w-24 bg-gradient-to-r from-aqua to-transparent mb-8" />
+
+          {/* Green supporting line */}
+          <p className="text-lg font-semibold text-aqua mb-8 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl">
+            Compassionate care. Better health.
+          </p>
+
+          {/* Supporting description */}
+          <p className="text-base leading-relaxed text-white/85 mb-10 max-w-lg sm:text-lg md:text-xl lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl">
+            Medical clinic, pharmacy, and laboratory in Kapatagan, Lanao del Norte.
+          </p>
+
+          {/* CTA */}
+          <div className="mb-8">
+            <ButtonLink
+              to="/services"
+              variant="white"
+              size="md"
+              className="group"
+            >
+              View Services
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+            </ButtonLink>
+          </div>
+
+          {/* Hours information */}
+          <div className="flex items-center gap-3 text-sm text-white/75 sm:text-base md:text-lg">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-sm">
+              <Clock className="h-5 w-5" aria-hidden="true" />
+            </div>
+            <span>{weeklyHoursLabel}</span>
+          </div>
         </div>
       </div>
     </section>
