@@ -1,14 +1,10 @@
 import type { ReactNode } from "react";
-import { Link } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
 import Reveal from "./Reveal";
 
 interface PageHeaderProps {
   eyebrow?: string;
   title: string;
   description?: string;
-  /** Breadcrumb label (defaults to `title`). */
-  crumb?: string;
   children?: ReactNode;
 }
 
@@ -20,7 +16,6 @@ export default function PageHeader({
   eyebrow,
   title,
   description,
-  crumb,
   children,
 }: PageHeaderProps) {
   return (

@@ -1,9 +1,8 @@
-import { Building2, FlaskConical, HeartHandshake, Pill, Stethoscope } from "lucide-react";
+import { FlaskConical, HeartHandshake, Pill, Stethoscope } from "lucide-react";
 
 import PageHeader from "@/components/PageHeader";
 import SectionHeading from "@/components/SectionHeading";
 import ClinicHours from "@/components/ClinicHours";
-import PlaceholderImage from "@/components/PlaceholderImage";
 import CTABand from "@/components/CTABand";
 import Reveal from "@/components/Reveal";
 import MapSection from "@/components/MapSection";

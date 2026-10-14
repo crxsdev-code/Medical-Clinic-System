@@ -12,7 +12,7 @@ export default function NotFound() {
 
   return (
     <>
-      <PageHeader eyebrow="404" title="Page not found" crumb="Not found" />
+      <PageHeader eyebrow="404" title="Page not found" />
 
       <section className="shell py-16 text-center sm:py-24">
         <p className="mx-auto max-w-xl text-base leading-relaxed text-muted">
