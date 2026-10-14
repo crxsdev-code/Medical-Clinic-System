@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Facebook, MapPin, Phone, Navigation } from "lucide-react";
+import { ArrowUpRight, Facebook, MapPin, Phone, Navigation, Satellite } from "lucide-react";
+import { useState } from "react";
 
 import { ButtonAnchor } from "./Button";
 import { clinic } from "@/data/clinic";
@@ -8,6 +9,8 @@ interface MapSectionProps {
   /** "full" = map + address panel (Contact page); "compact" = map only. */
   variant?: "full" | "compact";
   className?: string;
+  /** Show satellite view toggle button */
+  showSatelliteToggle?: boolean;
 }
 
 /**
@@ -17,8 +20,10 @@ interface MapSectionProps {
  * the site. If the clinic prefers a keyed embed later, replace the iframe
  * `src` with the provider URL — the surrounding UI does not change.
  */
-export default function MapSection({ variant = "full", className = "" }: MapSectionProps) {
-  const map = (
+export default function MapSection({ variant = "full", className = "", showSatelliteToggle = false }: MapSectionProps) {
+  const [isSatellite, setIsSatellite] = useState(false);
+
+  const renderMap = () => (
     <div
       className={`relative w-full overflow-hidden rounded-3xl border border-line bg-mist shadow-soft ${
         variant === "full"
@@ -28,7 +33,8 @@ export default function MapSection({ variant = "full", className = "" }: MapSect
     >
       <iframe
         title={`Map showing the location of ${clinic.name}`}
-        src={clinic.mapEmbedUrl}
+        src={isSatellite ? clinic.mapEmbedUrl.replace("output=embed", "t=k&output=embed") : clinic.mapEmbedUrl}
+        key={isSatellite ? "satellite" : "map"}
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
         allowFullScreen
@@ -38,30 +44,58 @@ export default function MapSection({ variant = "full", className = "" }: MapSect
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-deep/55 to-transparent" />
 
       <div className="absolute inset-x-4 bottom-4 flex flex-wrap items-end justify-between gap-3">
-        <p className="max-w-[16rem] rounded-2xl bg-white/92 px-3.5 py-2.5 text-xs leading-snug text-navy shadow-soft backdrop-blur-sm">
-          <span className="flex items-start gap-2 font-semibold">
-            <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand" aria-hidden="true" />
-            {clinic.address.line1}
-          </span>
-          <span className="mt-0.5 block pl-5 text-muted">{clinic.address.line2}</span>
-        </p>
+        {variant !== "compact" && (
+          <p className="max-w-[16rem] rounded-2xl bg-white/92 px-3.5 py-2.5 text-xs leading-snug text-navy shadow-soft backdrop-blur-sm">
+            <span className="flex items-start gap-2 font-semibold">
+              <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand" aria-hidden="true" />
+              {clinic.address.line1}
+            </span>
+            <span className="mt-0.5 block pl-5 text-muted">{clinic.address.line2}</span>
+          </p>
+        )}
 
-        <a
-          href={clinic.googleMaps}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full bg-navy px-4 py-2.5 text-sm font-semibold text-white shadow-lift transition hover:-translate-y-0.5 hover:bg-deep"
-        >
-          <Navigation className="h-4 w-4" aria-hidden="true" />
-          Open in Google Maps
-          <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-        </a>
+        <div className="flex flex-wrap items-end gap-3">
+          {showSatelliteToggle && (
+            <button
+              onClick={() => setIsSatellite(!isSatellite)}
+              className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-navy shadow-lift transition hover:-translate-y-0.5 hover:bg-mist"
+              aria-label={isSatellite ? "Switch to map view" : "Switch to satellite view"}
+            >
+              <Satellite className="h-4 w-4" aria-hidden="true" />
+              {isSatellite ? "Map" : "Satellite"}
+            </button>
+          )}
+
+          <a
+            href={clinic.googleMaps}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-navy px-4 py-2.5 text-sm font-semibold text-white shadow-lift transition hover:-translate-y-0.5 hover:bg-deep"
+          >
+            <Navigation className="h-4 w-4" aria-hidden="true" />
+            Open in Google Maps
+            <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </a>
+        </div>
       </div>
     </div>
   );
 
   if (variant === "compact") {
-    return <div className={`h-full ${className}`}>{map}</div>;
+    return (
+      <div className={`h-full ${className}`}>
+        {renderMap()}
+        <div className="mt-4 sm:hidden rounded-2xl border border-line bg-white p-4 shadow-soft">
+          <p className="text-base font-semibold text-navy leading-tight">
+            <span className="flex items-start gap-2">
+              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand" aria-hidden="true" />
+              {clinic.address.line1}
+            </span>
+          </p>
+          <p className="mt-2 text-sm text-muted pl-7 leading-relaxed">{clinic.address.line2}</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -141,7 +175,7 @@ export default function MapSection({ variant = "full", className = "" }: MapSect
         </p>
       </div>
 
-      {map}
+      {renderMap()}
     </div>
   );
 }

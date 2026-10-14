@@ -6,6 +6,7 @@ import ClinicHours from "@/components/ClinicHours";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import CTABand from "@/components/CTABand";
 import Reveal from "@/components/Reveal";
+import MapSection from "@/components/MapSection";
 import { ButtonLink } from "@/components/Button";
 import { clinic } from "@/data/clinic";
 import { services } from "@/data/services";
@@ -15,6 +16,18 @@ const SERVICE_ICONS = {
   "medical-clinic": Stethoscope,
   pharmacy: Pill,
   laboratory: FlaskConical,
+} as const;
+
+const SERVICE_ACCENTS = {
+  "medical-clinic": "bg-gradient-to-br from-brand/10 to-brand/5 text-brand",
+  pharmacy: "bg-gradient-to-br from-magenta/10 to-magenta/5 text-magenta",
+  laboratory: "bg-gradient-to-br from-leaf/10 to-leaf/5 text-leaf",
+} as const;
+
+const SERVICE_BORDER_ACCENTS = {
+  "medical-clinic": "hover:border-brand/40",
+  pharmacy: "hover:border-magenta/40",
+  laboratory: "hover:border-leaf/40",
 } as const;
 
 const APPROACH = [
@@ -84,22 +97,7 @@ export default function About() {
           </Reveal>
 
           <Reveal delay={120}>
-            <div className="overflow-hidden rounded-xl border border-line shadow-soft">
-              <div className="aspect-[4/3] w-full">
-                <PlaceholderImage
-                  label="Clinic exterior / interior"
-                  hint="Add an approved clinic photograph"
-                  tone="light"
-                  icon={<Building2 className="h-6 w-6" aria-hidden="true" />}
-                />
-              </div>
-            </div>
-
-            {/* Replaceable content block — low prominence by design */}
-            <p className="mt-4 rounded-xl border border-dashed border-line px-4 py-3 text-xs leading-relaxed text-muted">
-              <span className="font-semibold text-navy">Editorial placeholder:</span> [Clinic
-              history / background to be provided by the clinic.]
-            </p>
+            <MapSection variant="compact" showSatelliteToggle={true} />
           </Reveal>
         </div>
       </section>
@@ -121,8 +119,8 @@ export default function About() {
               const Icon = SERVICE_ICONS[service.id];
               return (
                 <Reveal key={service.id} delay={index * 90}>
-                  <article className="h-full rounded-xl border border-line bg-mist p-7 transition hover:border-brand/40 hover:bg-white hover:shadow-soft">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-white text-brand shadow-soft">
+                  <article className={`h-full rounded-xl border border-line bg-mist p-7 transition ${SERVICE_BORDER_ACCENTS[service.id]} hover:bg-white hover:shadow-soft`}>
+                    <span className={`flex h-12 w-12 items-center justify-center rounded-lg ${SERVICE_ACCENTS[service.id]}`}>
                       <Icon className="h-5.5 w-5.5" aria-hidden="true" />
                     </span>
                     <h3 className="mt-5 text-lg font-bold tracking-tight text-navy">
@@ -189,7 +187,7 @@ export default function About() {
               description="Opening hours for the clinic, pharmacy and laboratory."
             />
             <p className="mt-6 max-w-md text-sm leading-relaxed text-muted">
-              For the most current schedule — especially on Sundays — please call{" "}
+              For the most current schedule or any changes, please call{" "}
               <a
                 href={`tel:${clinic.phones[0].tel}`}
                 className="font-semibold text-brand underline-offset-4 hover:underline"

@@ -1,5 +1,5 @@
 import { Phone } from "lucide-react";
-import { clinic, weeklyHoursLabel } from "@/data/clinic";
+import { clinic, compactHoursLabel } from "@/data/clinic";
 
 /**
  * Slim information strip above the main navigation.
@@ -14,7 +14,7 @@ export default function TopBar() {
       <div className="shell flex h-7 items-center justify-end gap-4 text-[12px]">
         {/* Hours + phone */}
         <div className="flex shrink-0 items-center gap-5">
-          <span className="hidden text-white/55 md:inline">{weeklyHoursLabel}</span>
+          <span className="hidden text-white/55 md:inline">{compactHoursLabel}</span>
 
           <a
             href={`tel:${primary.tel}`}

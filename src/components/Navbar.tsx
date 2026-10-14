@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Facebook, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 import Logo from "./Logo";
 import PhoneButton from "./PhoneButton";
@@ -177,7 +177,7 @@ export default function Navbar() {
           onClick={closeMenu}
           aria-hidden="true"
           className={[
-            "absolute inset-0 bg-deep/60 backdrop-blur-[2px] transition-opacity duration-300",
+            "absolute inset-0 bg-deep/60 backdrop-blur-[2px] transition-opacity duration-500 ease-out",
             menuOpen ? "opacity-100" : "opacity-0",
           ].join(" ")}
         />
@@ -191,7 +191,7 @@ export default function Navbar() {
           aria-hidden={!menuOpen}
           className={[
             "absolute right-0 top-0 flex h-full w-[88%] max-w-sm flex-col bg-white shadow-lift",
-            "transition-[transform,visibility] duration-300 ease-soft",
+            "transition-[transform,visibility] duration-500 ease-out",
             menuOpen ? "visible translate-x-0" : "invisible translate-x-full",
           ].join(" ")}
         >
@@ -279,15 +279,6 @@ export default function Navbar() {
               className="w-full"
               ariaLabel={`Call the clinic at ${clinic.phones[0].display}`}
             />
-            <a
-              href={clinic.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Visit our Facebook page (opens in a new tab)"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-line text-navy transition hover:border-brand hover:text-brand"
-            >
-              <Facebook className="h-5 w-5" aria-hidden="true" />
-            </a>
           </div>
         </div>
       </div>

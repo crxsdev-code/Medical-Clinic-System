@@ -69,7 +69,7 @@ export default function SectionHeading({
         <p
           className={[
             "mt-5 text-base leading-relaxed sm:text-lg",
-            isLight ? "text-white/70" : "text-muted",
+            isLight ? "text-white/90" : "text-muted",
           ].join(" ")}
         >
           {description}

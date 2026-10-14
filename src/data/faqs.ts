@@ -14,6 +14,10 @@ export interface Faq {
   question: string;
   answer?: string;
   render?: "clinic-hours";
+  link?: {
+    text: string;
+    url: string;
+  };
 }
 
 export const faqs: Faq[] = [
@@ -26,7 +30,7 @@ export const faqs: Faq[] = [
     id: "sunday",
     question: "Is the clinic open on Sundays?",
     answer:
-      "The Sunday schedule is currently being confirmed. Please call 0917 798 8717 or check our official Facebook page before visiting on a Sunday.",
+      "Yes, the clinic is open on Sundays from 9:00 AM to 12:00 PM.",
   },
   {
     id: "location",
@@ -62,6 +66,10 @@ export const faqs: Faq[] = [
     id: "directions",
     question: "How do I get directions to the clinic?",
     answer:
-      "Open our Contact page and select “Get Directions”, or use the link to view the clinic directly in Google Maps.",
+      "The clinic is located at Unit 7 and 8, Town Center, Poblacion, Kapatagan, 9214 Lanao del Norte. You can find us easily in the town center area.",
+    link: {
+      text: "View on Google Maps",
+      url: "https://www.google.com/maps/place/NRM+MENDOZA+MEDICAL+CLINIC/@7.9014408,123.7588591,16.25z/data=!4m6!3m5!1s0x3254354f48dee5dd:0xfcd2ac68e4cd8555!8m2!3d7.8977225!4d123.7688172!16s%2Fg%2F11w4fw8yd_?entry=ttu",
+    },
   },
 ];

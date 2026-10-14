@@ -35,24 +35,8 @@ export default function PageHeader({
 
       <div className="shell relative z-10 py-14 sm:py-16 lg:py-20">
         <Reveal>
-          <nav aria-label="Breadcrumb">
-            <ol className="flex flex-wrap items-center gap-1.5 text-sm text-white/55">
-              <li>
-                <Link to="/" className="transition-colors hover:text-aqua">
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden="true">
-                <ChevronRight className="h-4 w-4" />
-              </li>
-              <li className="text-white/85" aria-current="page">
-                {crumb ?? title}
-              </li>
-            </ol>
-          </nav>
-
           {eyebrow && (
-            <p className="mt-6 flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-aqua">
+            <p className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-aqua">
               <span className="h-px w-6 bg-aqua/50" aria-hidden="true" />
               {eyebrow}
             </p>

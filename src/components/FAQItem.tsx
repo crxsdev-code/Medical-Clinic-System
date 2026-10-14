@@ -1,5 +1,5 @@
 import { useId } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ArrowUpRight } from "lucide-react";
 import type { Faq } from "@/data/faqs";
 import ClinicHours from "./ClinicHours";
 
@@ -62,7 +62,21 @@ export default function FAQItem({ faq, open, onToggle }: FAQItemProps) {
             {faq.render === "clinic-hours" ? (
               <ClinicHours variant="card" className="shadow-none" />
             ) : (
-              <p className="text-[0.95rem] leading-relaxed text-muted">{faq.answer}</p>
+              <>
+                <p className="text-[0.95rem] leading-relaxed text-muted">{faq.answer}</p>
+                {faq.link && (
+                  <a
+                    href={faq.link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand transition-colors hover:text-navy"
+                    aria-label={faq.link.text}
+                  >
+                    {faq.link.text}
+                    <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  </a>
+                )}
+              </>
             )}
           </div>
         </div>

@@ -4,14 +4,6 @@
  * Everything the website displays about the clinic (name, address, phone
  * numbers, social links and opening hours) is read from this file so the
  * client can update details in one place.
- *
- * IMPORTANT — Sunday schedule:
- * There is conflicting information on file for Sunday:
- *   • earlier note .......... 9:00 AM – 12:00 PM
- *   • latest clinic poster ... 8:00 AM – 12:00 PM
- * Because the two sources disagree, Sunday is intentionally left as
- * "pending confirmation" below. Replace `hours.sunday` with the confirmed
- * values once the clinic verifies them — every page updates automatically.
  */
 
 export type HourStatus = "confirmed" | "pending";
@@ -93,13 +85,7 @@ export const clinic: ClinicData = {
     { day: "Thursday", short: "Thu", hours: "8:00 AM – 5:00 PM", status: "confirmed" },
     { day: "Friday", short: "Fri", hours: "8:00 AM – 5:00 PM", status: "confirmed" },
     { day: "Saturday", short: "Sat", hours: "8:00 AM – 5:00 PM", status: "confirmed" },
-    {
-      day: "Sunday",
-      short: "Sun",
-      hours: null,
-      status: "pending",
-      note: "Schedule to be confirmed — please call the clinic or check our Facebook page.",
-    },
+    { day: "Sunday", short: "Sun", hours: "9:00 AM – 12:00 PM", status: "confirmed" },
   ],
 };
 
@@ -120,8 +106,26 @@ export const confirmedHoursSummary = (() => {
 export const weeklyHoursLabel = (() => {
   const confirmed = clinic.hours.filter((h) => h.status === "confirmed" && h.hours);
   if (confirmed.length === 0) return "Please contact the clinic for current hours.";
-  const first = confirmed[0];
-  const last = confirmed[confirmed.length - 1];
+  const weekdays = confirmed.filter((h) => h.day !== "Sunday");
+  const sunday = confirmed.find((h) => h.day === "Sunday");
+  const first = weekdays[0];
+  const last = weekdays[weekdays.length - 1];
+  const days =
+    first.day === last.day ? first.day : `${first.day}–${last.day}`;
+  const weekdayHours = `${days} · ${first.hours}`;
+  const sundayHours = sunday ? `\n        Sunday · ${sunday.hours}` : "";
+  return `${weekdayHours}${sundayHours}`;
+})();
+
+/**
+ * Compact hours label for smaller screens - weekday hours only.
+ */
+export const compactHoursLabel = (() => {
+  const confirmed = clinic.hours.filter((h) => h.status === "confirmed" && h.hours);
+  if (confirmed.length === 0) return "Please contact the clinic for current hours.";
+  const weekdays = confirmed.filter((h) => h.day !== "Sunday");
+  const first = weekdays[0];
+  const last = weekdays[weekdays.length - 1];
   const days =
     first.day === last.day ? first.day : `${first.day}–${last.day}`;
   return `${days} · ${first.hours}`;

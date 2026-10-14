@@ -1,4 +1,4 @@
-import { Facebook, MessageCircleQuestion, Phone } from "lucide-react";
+import { MessageCircleQuestion, Phone } from "lucide-react";
 
 import PageHeader from "@/components/PageHeader";
 import SectionHeading from "@/components/SectionHeading";
@@ -8,6 +8,8 @@ import Reveal from "@/components/Reveal";
 import { ButtonAnchor, ButtonLink } from "@/components/Button";
 import { clinic } from "@/data/clinic";
 import { usePageSeo } from "@/lib/usePageSeo";
+
+import facebookIcon from "@/assets/images/icons/facebook.png";
 
 export default function FAQ() {
   usePageSeo({
@@ -55,7 +57,7 @@ export default function FAQ() {
                   className="w-full"
                   aria-label="Message us on Facebook (opens in a new tab)"
                 >
-                  <Facebook className="h-4 w-4" aria-hidden="true" />
+                  <img src={facebookIcon} alt="Facebook" className="h-5 w-5" aria-hidden="true" />
                   Message on Facebook
                 </ButtonAnchor>
 

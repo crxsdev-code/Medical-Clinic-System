@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
-import { Facebook, MapPin, ArrowUpRight, Clock } from "lucide-react";
+import { MapPin, ArrowUpRight, Clock } from "lucide-react";
 
 import Logo from "./Logo";
 import { mainNav } from "@/data/navigation";
 import { clinic, weeklyHoursLabel } from "@/data/clinic";
+
+import facebookIcon from "@/assets/images/icons/facebook.png";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -38,7 +40,7 @@ export default function Footer() {
               className="mt-6 inline-flex items-center gap-2 rounded-lg border border-white/20 px-4 py-2.5 text-sm font-medium text-white/80 transition hover:border-white/50 hover:text-white"
               aria-label="NRM Mendoza Medical Clinic on Facebook (opens in a new tab)"
             >
-              <Facebook className="h-4 w-4" aria-hidden="true" />
+              <img src={facebookIcon} alt="Facebook" className="h-4 w-4" aria-hidden="true" />
               Facebook
               <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
@@ -112,15 +114,18 @@ export default function Footer() {
               Clinic Hours
             </h2>
 
-            <p className="mt-5 flex items-start gap-2.5 text-sm leading-relaxed text-white/75">
-              <Clock className="mt-0.5 h-4 w-4 shrink-0 text-aqua" aria-hidden="true" />
-              <span>{weeklyHoursLabel}</span>
-            </p>
-
-            <p className="mt-3 text-sm leading-relaxed text-white/50">
-              Sunday: schedule to be confirmed — please call the clinic or check our Facebook
-              page.
-            </p>
+            <div className="mt-5 flex flex-col items-start gap-2.5 text-sm leading-relaxed text-white/75">
+              <div className="flex items-start gap-2.5">
+                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-aqua" aria-hidden="true" />
+                <span className="whitespace-nowrap">{weeklyHoursLabel.split('\n')[0]}</span>
+              </div>
+              {weeklyHoursLabel.includes('\n') && (
+                <div className="flex items-start gap-2.5">
+                  <span className="h-4 w-4 shrink-0"></span>
+                  <span className="whitespace-nowrap">{weeklyHoursLabel.split('\n')[1]}</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
